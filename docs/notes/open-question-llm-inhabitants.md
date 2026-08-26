@@ -1,17 +1,17 @@
----
-status: accepted
----
+# Open question: can an LLM-driven inhabitant hold stakes?
 
-# LLM-driven inhabitants are a third category and cannot hold stakes
+**This is not a decision about a system being built.** No implementation is planned.
+It records a position taken for the sake of thinking clearly, and the reasoning behind
+it, so that the reasoning is available later if it is ever needed.
 
 Habitat's sources treat Avatars (human-driven, own property, can be killed) and
 Objects (owned, behavioural, pawnable) as categorically different things, and an
 LLM-driven inhabitant sits awkwardly across the line: it has an Avatar's apparent
-agency and an Object's ontological status. We are defining it as a third category —
+agency and an Object's ontological status. The position I find most defensible is a third category —
 **Familiar** (bound to a human principal) and **Fixture** (bound to a place) — rather
-than admitting it to either existing one, and we are defining it by what it lacks:
-**stake**, meaning something it can lose and would rather not. Familiars and Fixtures
-therefore cannot accumulate, cannot vote, cannot hold standing, and must always trace
+than admitting it to either existing one, defined by what it lacks:
+**stake**, meaning something it can lose and would rather not. On this reading Familiars and Fixtures
+cannot accumulate, cannot vote, cannot hold standing, and must always trace
 to an accountable human.
 
 ## Considered options
@@ -28,7 +28,7 @@ to an accountable human.
   across sessions, and can wrong someone. Calling it furniture would leave us with no
   vocabulary for accountability when it does.
 
-## Consequences
+## What this would cost
 
 - Any feature granting accumulation, standing, or governance rights needs an explicit
   Avatar check; "inhabitant" is never sufficient authorisation.

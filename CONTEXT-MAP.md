@@ -8,9 +8,9 @@ assumption.
 
 - [Habitat (historical)](./CONTEXT-HABITAT.md) — the vocabulary needed to *read the
   primary sources*. Fixed by history; we do not get a vote on these definitions.
-- [The 2026 system](./CONTEXT-2026.md) — the vocabulary of the federated,
-  LLM-inhabited system being designed. Under active construction; the project is
-  currently unnamed, so this file is named for its era rather than for the system.
+- [Vocabulary for the 2026 problem](./CONTEXT-2026.md) — provisional distinctions
+  needed to think about federation and LLM inhabitants. No system is being built; this
+  is research vocabulary, not a specification.
 
 ## Relationships
 

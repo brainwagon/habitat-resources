@@ -1,11 +1,13 @@
-# The 2026 system
+# Vocabulary for the 2026 problem
 
-A federated, massively multiplayer online community in which human inhabitants and
-LLM-driven non-human inhabitants coexist. Federated in the governance sense: many
-independently operated servers, one social fabric.
+Words I found I needed while reading the Habitat sources with a modern question in
+mind: what happens to a massively multiplayer community when it is federated across
+many operators and when some of its inhabitants are driven by language models.
 
-The project is unnamed. Terms here are under active construction, unlike the
-historical Habitat glossary, which is fixed.
+**No system is being built.** This is not a specification and not a plan. It is a set
+of distinctions that the Habitat sources make necessary but do not themselves supply,
+recorded because reasoning about the problem is impossible without them. Everything
+here is provisional, unlike the historical Habitat glossary, which is fixed.
 
 ## Inhabitants
 

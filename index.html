@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reading Habitat in 2026</title>
+<style>
+  :root {
+    --bg: #fbfaf7; --fg: #1c1b19; --muted: #66625b; --rule: #ddd8ce;
+    --accent: #8a3324; --card: #f4f1ea; --tag: #efeade;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #16151a; --fg: #e6e3dd; --muted: #9d9890; --rule: #34323a;
+      --accent: #e08b6f; --card: #1e1d23; --tag: #26252c;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0 1.5rem 6rem;
+    background: var(--bg); color: var(--fg);
+    font: 17px/1.65 Charter, "Bitstream Charter", "Iowan Old Style", Georgia, serif;
+    -webkit-text-size-adjust: 100%;
+  }
+  .wrap { max-width: 42rem; margin: 0 auto; }
+  header.masthead { padding: 4rem 0 2rem; border-bottom: 2px solid var(--fg); margin-bottom: 2.5rem; }
+  h1 { font-size: 2.4rem; line-height: 1.1; margin: 0 0 .8rem; letter-spacing: -0.02em; }
+  .byline { color: var(--muted); font-size: .9rem; margin: 0; }
+  .standfirst { font-size: 1.15rem; color: var(--fg); margin: 1.4rem 0 0; }
+  h2 {
+    font-size: 1.45rem; line-height: 1.2; margin: 3.5rem 0 1rem;
+    padding-top: 1.2rem; border-top: 1px solid var(--rule); letter-spacing: -0.01em;
+  }
+  h3 { font-size: 1.08rem; margin: 2.2rem 0 .5rem; }
+  h4 { font-size: .8rem; letter-spacing: .09em; text-transform: uppercase;
+       color: var(--muted); margin: 2.5rem 0 .8rem; font-weight: 600; }
+  p { margin: 0 0 1.1rem; }
+  a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  blockquote {
+    margin: 1.5rem 0; padding: 0 0 0 1.2rem;
+    border-left: 3px solid var(--accent); color: var(--fg); font-style: italic;
+  }
+  blockquote cite { display: block; font-style: normal; font-size: .85rem;
+                    color: var(--muted); margin-top: .5rem; }
+  .note {
+    background: var(--card); border: 1px solid var(--rule); border-radius: 3px;
+    padding: 1rem 1.2rem; margin: 1.8rem 0; font-size: .95rem;
+  }
+  .note p:last-child { margin-bottom: 0; }
+  /* ---- source list: denser reference treatment ---- */
+  .sources { font-family: ui-sans-serif, system-ui, "Helvetica Neue", sans-serif; font-size: .93rem; }
+  .src { padding: .9rem 0; border-bottom: 1px solid var(--rule); }
+  .src:first-of-type { border-top: 1px solid var(--rule); }
+  .src .t { font-weight: 600; line-height: 1.35; }
+  .src .meta { color: var(--muted); font-size: .82rem; margin-top: .15rem; }
+  .src .anno { margin-top: .45rem; line-height: 1.5; }
+  .src .lens { margin-top: .45rem; padding-left: .8rem; border-left: 2px solid var(--rule);
+               color: var(--muted); font-size: .88rem; line-height: 1.5; }
+  .flag {
+    display: inline-block; font-size: .68rem; letter-spacing: .06em; text-transform: uppercase;
+    background: var(--tag); border: 1px solid var(--rule); border-radius: 2px;
+    padding: .1rem .35rem; margin-left: .3rem; color: var(--muted); vertical-align: 1px;
+    white-space: nowrap;
+  }
+  /* ---- lineage table ---- */
+  .scroll { overflow-x: auto; margin: 1.5rem 0; }
+  table { border-collapse: collapse; width: 100%; font-size: .9rem;
+          font-family: ui-sans-serif, system-ui, sans-serif; }
+  th, td { text-align: left; padding: .55rem .7rem; border-bottom: 1px solid var(--rule);
+           vertical-align: top; }
+  th { font-size: .74rem; letter-spacing: .07em; text-transform: uppercase;
+       color: var(--muted); border-bottom: 1px solid var(--fg); font-weight: 600; }
+  td.yr { white-space: nowrap; color: var(--muted); }
+  /* ---- lessons ---- */
+  .lesson { margin: 2.2rem 0; }
+  .lesson h3 { margin-top: 0; }
+  .lesson h3 .n { color: var(--accent); font-variant-numeric: tabular-nums; margin-right: .4rem; }
+  .then, .now { margin: 0 0 .8rem; }
+  .now::before {
+    content: "In 2026"; display: block; font-size: .72rem; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: .2rem; font-weight: 600;
+    font-family: ui-sans-serif, system-ui, sans-serif;
+  }
+  .unsolved { border-left: 3px solid var(--accent); padding-left: 1rem; }
+  dl.gloss { font-size: .95rem; }
+  dl.gloss dt { font-weight: 600; margin-top: 1rem; }
+  dl.gloss dd { margin: .15rem 0 0; color: var(--fg); }
+  footer { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--rule);
+           color: var(--muted); font-size: .85rem; }
+  ul.tight li { margin-bottom: .5rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="masthead">
+  <h1>Reading Habitat in 2026</h1>
+  <p class="byline">Mark VandeWettering · 26 August 2026 · a source list and some notes</p>
+  <p class="standfirst">Lucasfilm's <em>Habitat</em> ran on a Commodore 64 over a 300-baud modem
+  and worked out most of what we know about online societies before the web existed. I went
+  looking for the primary sources. This is what I found, what's actually worth reading, and
+  what forty-year-old lessons do and don't survive contact with a world that's federated
+  across many operators and populated partly by language models.</p>
+</header>
+
+<h2>Why Habitat, in 2026</h2>
+
+<p>Most writing about <em>Habitat</em> is nostalgia — "the first graphical MMO," a line in a
+timeline, a screenshot of a blocky avatar with a detachable head. That framing badly undersells
+it. <em>Habitat</em> is the only case in the history of virtual worlds where the people who
+built it wrote down what they learned, in detail, while it was still fresh, in a document that
+is freely readable today and holds up better than almost anything written since.</p>
+
+<p>What makes it useful now rather than merely interesting is the constraint. Chip Morningstar
+and Randy Farmer had 64K of RAM, a floppy drive, and 30 characters per second of bandwidth.
+They could not brute-force anything. Every design decision had to be justified, and when the
+world produced a problem they hadn't anticipated — an economy that quintupled overnight, an
+elected sheriff with no powers, a church that kept getting robbed — they had to reason about it
+from first principles and then write the reasoning down. Constraint produces clarity. A modern
+platform can paper over a bad social model with compute; <em>Habitat</em> couldn't, so the
+social model is visible in a way it usually isn't.</p>
+
+<p>I came to this with a specific question in mind, and I want to be upfront that it is a
+question and not a project: what would a massively multiplayer community look like in 2026 if
+it were <em>federated</em> — many independently operated servers, one social fabric, no single
+company in charge — and if some of the inhabitants were driven by large language models? I have
+no implementation planned. I wanted to understand a complex system from the beginning of this
+field well enough that its lessons could sharpen thinking I'm doing now.</p>
+
+<p>Reading the sources with that question in hand turns out to be productive, mostly because
+<em>Habitat</em> keeps refusing to give the answer you want. The single most quoted sentence in
+the founding paper is a flat denial of the premise:</p>
+
+<blockquote>
+  Nobody knows how to produce an automaton that even approaches the complexity of a real human
+  being, let alone a society. Our approach, then, is not even to attempt this, but instead to
+  use the computational medium to augment the communications channels between real people.
+  <cite>Morningstar &amp; Farmer, <em>The Lessons of Lucasfilm's Habitat</em>, 1990</cite>
+</blockquote>
+
+<p>That was written before anyone could plausibly claim otherwise, and it is tempting to treat
+it as simply overtaken by events. I don't think it has been, and the reason isn't a claim about
+what language models can do. Read the paper's argument in full and the claim isn't really about
+automata at all — it's about what people are there <em>for</em>. Every lesson downstream of it
+concerns humans with something at risk: users who spent real money at eight cents a minute,
+Motivators who built businesses they could lose, a minister whose church actually got robbed
+while he was logged off. The complexity that made <em>Habitat</em> worth inhabiting was a
+byproduct of people having stakes. An inhabitant with nothing to lose can be articulate,
+useful, even charming, and still not supply that.</p>
+
+<p>So my working position — held loosely, and argued against below — is that the axiom survives
+in a narrowed form: language models can furnish a world, staff it, and make it legible, but the
+society has to be human-derived, and the interesting design problem is keeping the automated
+inhabitants from crowding out the humans whose stakes make the place real. The honest
+counter-argument is that this is exactly what someone in 1990 would say, that it's unfalsifiable
+as stated, and that nobody has actually run the experiment at scale. That's fair. I'd rather
+hold the position and know it's contestable than pretend the sources settle it.</p>
+
+<h2>The lineage: five different things called Habitat</h2>
+
+<p>A lot of confusion in secondary writing comes from treating these as one system. They aren't.
+They had different code, different operators, different economics, and in two cases different
+countries. When a source says "Habitat," check which one it means.</p>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>System</th><th class="yr">Ran</th><th>What it actually was</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Habitat</strong></td><td class="yr">1986–May 1988</td>
+      <td>The Lucasfilm/Quantum Link pilot on the Commodore 64. A paid beta — users paid roughly
+      $0.08/minute on top of Q-Link fees. Everything in the founding paper describes this.</td></tr>
+    <tr><td><strong>Club Caribe</strong></td><td class="yr">1989–Feb 1994</td>
+      <td>Q-Link's commercial release. Same engine, weapons and the science-fiction content
+      stripped out at the operator's insistence. Morningstar's name for the result was
+      "Club Metaphor."</td></tr>
+    <tr><td><strong>Fujitsu Habitat</strong></td><td class="yr">Feb 1990–</td>
+      <td>A rebuild for NIFTY-Serve in Japan, following a 1988 technology transfer at Skywalker
+      Ranch. A re-implementation, not a port. Fujitsu bought the IP outright in 1993.</td></tr>
+    <tr><td><strong>WorldsAway</strong></td><td class="yr">Sep 1995–</td>
+      <td>Fujitsu's desktop successor on CompuServe; the first world was Dreamscape. Returned to
+      Japan as <em>Habitat II</em> in 1996. Descendants ran commercially for years afterward.</td></tr>
+    <tr><td><strong>NeoHabitat</strong></td><td class="yr">2016–present</td>
+      <td>Open-source reconstruction from source code released by the MADE. Original C64 clients
+      talk to a re-implemented server. Not an emulator — the logic was ported.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>The lineage is itself evidence, and it's the part I find most directly relevant to a
+federated design. This is the only case I know of where substantially the same virtual world was
+operated by different parties, in different markets, under different commercial pressure — and
+the results diverged sharply. Q-Link's marketing anxieties produced Club Caribe. Fujitsu's
+belief in the product produced a decade of successors. Same world, different operator, different
+world. If you're thinking about federation, that's not an analogy, it's the closest thing to a
+natural experiment the field has.</p>
+
+<h2>The primary sources</h2>
+
+<p>Tiered by what they are, not by quality. <strong>Primary</strong> means made by participants
+at the time or recalling it directly. <strong>Reconstruction</strong> means modern work on
+original artifacts. <strong>Secondary</strong> means someone writing about it afterward. Every
+link below was checked on <strong>26 August 2026</strong>; where a source is fragile I've put
+the archived copy beside it.</p>
+
+<h4>Primary</h4>
+<div class="sources">
+
+  <div class="src">
+    <div class="t"><a href="https://www.crockford.com/ec/lessons.html">The Lessons of Lucasfilm's Habitat</a></div>
+    <div class="meta">Chip Morningstar &amp; F. Randall Farmer, 1990 · also at
+      <a href="https://web.stanford.edu/class/history34q/readings/Virtual_Worlds/LucasfilmHabitat.html">Stanford</a>
+      and <a href="https://www.scara.com/~ole/literatur/LessonsOfHabitat.html">scara.com</a></div>
+    <div class="anno">The one to read if you read only one. Presented at the First Annual
+      International Conference on Cyberspace, May 1990; published in <em>Cyberspace: First
+      Steps</em> (MIT Press, 1991). Contains the three principles, the Doll and Crystal Ball
+      arbitrage, the Sheriff election, D'nalsi Island, and the "detailed central planning is
+      impossible; don't even try" argument. About an hour to read.</div>
+    <div class="lens">On automated inhabitants: the paper's central claim is that they cannot
+      supply what people come for. On stakes: the entire economic section is a study of what
+      happens when participants have real money at risk. Read the closing argument for an
+      "agoric, evolutionary approach to world building rather than a centralized, socialistic
+      one" — the most direct thing here about distributed design.</div>
+  </div>
+
+  <div class="src">
+    <div class="t"><a href="https://www.crockford.com/ec/anecdotes.html">Habitat Anecdotes</a></div>
+    <div class="meta">F. Randall Farmer, 1988 · hosted by Douglas Crockford</div>
+    <div class="anno">The companion volume, and in some ways the better document: the raw
+      incidents in Farmer's own voice, before they were polished into arguments. The Order of
+      the Holy Walnut, the Avatar weddings and the first divorce, the head-stealing plague, the
+      50/50 vote on whether Habi-murder was a crime, and Farmer ghosting in and out of the
+      sheriff debate to heckle a candidate anonymously. Also the confirmation, stated plainly,
+      that the winning sheriff candidate "was the brains behind The Scam."</div>
+    <div class="lens">On governance affordances that assumed a human: nearly every anecdote ends
+      with an operator manually intervening — putting a lock on the church door, joining two
+      turfs so a married couple could cohabit. Every one of those is an unsolved problem in a
+      world with no central operator.</div>
+  </div>
+
+  <div class="src">
+    <div class="t"><a href="https://habitat-chronicles.com/">Habitat Chronicles</a></div>
+    <div class="meta">F. Randall Farmer &amp; Chip Morningstar, ongoing ·
+      <a href="http://habitat-chronicles.com/category/history/">history category</a></div>
+    <div class="anno">Decades of retrospective writing by the people who built it, still being
+      added to. This is where the user archetypes — Passive, Active, Motivator, Caretaker — get
+      their fullest treatment, along with later thinking on reputation systems, online community
+      management, and where the original design was wrong. Underused by most writing on the
+      subject, which tends to cite the 1990 paper and stop.</div>
+    <div class="lens">Farmer's later work on reputation and moderation is the most direct
+      bridge from Habitat to problems a federated system has to solve on day one.</div>
+  </div>
+
+  <div class="src">
+    <div class="t"><a href="https://archive.org/details/lucasfilmhabitatsourcecode">Lucasfilm Games Habitat source code</a></div>
+    <div class="meta">Released 2016 via the MADE · Internet Archive</div>
+    <div class="anno">The actual PL/1 that ran on the Stratus. Reading it is a corrective to
+      every romantic account of the project, this page included: the world model is much
+      smaller and more concrete than the prose suggests, which is itself the lesson.</div>
+    <div class="lens">Worth opening specifically to see how little the server does, and how much
+      of the "society" was social convention layered over a very small set of primitives.</div>
+  </div>
+
+  <div class="src">
+    <div class="t"><a href="https://www.vintagecomputing.com/index.php/archives/1164/vcg-anthology-interview-randy-farmer-co-creator-of-lucasfilm-habitat-2008">Interview: Randy Farmer</a></div>
+    <div class="meta">Benj Edwards, Vintage Computing &amp; Gaming, 2008</div>
+    <div class="anno">Long, technical, and the best account of the engineering constraints —
+      the memory swapping off floppy, the Commodore graphics chips that shipped with varying
+      hardware bugs, why the C64 was chosen for business reasons rather than technical ones.</div>
+  </div>
+
+  <div class="src">
+    <div class="t"><a href="https://renoproject.org/aric-wilmunder-interview/">Interview: Aric Wilmunder</a></div>
+    <div class="meta">Reno Project</div>
+    <div class="anno">The client side and the tooling: the Atari Cel Editor becoming the C64
+      tool Grace, the cel-layering approach to avatar faces, and the lineage from Habitat's
+      object behaviours into SCUMM.</div>
+  </div>
+
+  <div class="src">
+    <div class="t"><a href="https://gamesbeat.com/chip-morningstar-interview-how-the-metaverse-started-with-habitat/">Interview: Chip Morningstar</a></div>
+    <div class="meta">Dean Takahashi, GamesBeat</div>
+    <div class="anno">Morningstar looking back from the middle of the metaverse hype cycle,
+      with a useful impatience about it. Also covers Electric Communities and the path from
+      Habitat's trust problems into capability-based security.</div>
+    <div class="lens">The most direct statement of why the people who built the first one are
+      sceptical of the current wave — relevant if you're inclined to build the next one.</div>
+  </div>
+
+  <div class="src">
+    <div class="t"><a href="https://www.rheingold.com/vc/book/6.html">The Virtual Community, ch. 6</a></div>
+    <div class="meta">Howard Rheingold, 1993 · full text free from the author</div>
+    <div class="anno">Contemporary rather than retrospective: Habitat as evidence, while the
+      question of whether computer-mediated community was real was still genuinely open.</div>
+  </div>
+
+  <div class="src">
+    <div class="t"><a href="https://archive.org/stream/CyberspaceFirstSteps/Cyberspace%20First%20Steps%20%281991%29_djvu.txt">Cyberspace: First Steps (full text)</a></div>
+    <div class="meta">Michael Benedikt, ed., MIT Press 1991 · Internet Archive</div>
+    <div class="anno">The anthology the Habitat paper appeared in. Worth reading around it:
+      Benedikt's own contribution argues cyberspace should extend the laws of nature onto a
+      Cartesian grid, and Habitat is the flat empirical refutation sitting a few chapters
+      away — a world where you swap heads, change gender, and teleport.</div>
+  </div>
+
+  <div class="src">
+    <div class="t"><a href="https://cdn.loc.gov/copyright/1201/2018/comments-121817/class8/class-08-initialcomments-made.pdf">MADE comment to the Copyright Office, DMCA §1201</a></div>
+    <div class="meta">Museum of Art and Digital Entertainment, 2018 · PDF</div>
+    <div class="anno">The least-cited genuinely primary document here. The MADE's legal argument
+      for why online games need a preservation exemption, using Habitat as the case study. If
+      you want to understand why an MMO's history is harder to keep than a cartridge game's,
+      this is the argument made under oath rather than in a blog post.</div>
+    <div class="lens">Directly relevant to federation: a world dies when its operator stops
+      running it, and this is the paperwork proving how hard that is to undo.</div>
+  </div>
+
+  <div class="src">
+    <div class="t"><a href="https://www.youtube.com/watch?v=D0Q4ZJCMUX8">WorldsAway rolling demo, May 1995</a></div>
+    <div class="meta">Video</div>
+    <div class="anno">Moving footage of a descendant in operation. Useful for the same reason
+      screenshots aren't: the pace of the thing.</div>
+  </div>
+</div>
+
+<h4>Reconstruction — modern work on original artifacts</h4>
+<div class="sources">
+  <div class="src">
+    <div class="t"><a href="https://github.com/frandallfarmer/neohabitat">NeoHabitat</a></div>
+    <div class="meta">Source repository · docs at
+      <a href="https://frandallfarmer.github.io/neohabitat-doc/">neohabitat-doc</a>,
+      including the <a href="https://frandallfarmer.github.io/neohabitat-doc/docs/Avatar%20Handbook.html">Avatar Handbook</a></div>
+    <div class="anno">The 1986 world, running, today. Original PL/1 server logic ported onto the
+      Elko platform so that unmodified C64 clients can connect. Farmer himself is involved. The
+      running code is the most under-linked resource in most writing about Habitat, which tends
+      to describe the project without pointing at it.</div>
+    <div class="lens">The most concrete thing on this page: if you want to know how a
+      1986 world model actually behaves, you can run it rather than read about it.</div>
+  </div>
+
+  <div class="src">
+    <div class="t"><a href="https://renoproject.org/lucasfilms-habitat-text-and-world-restoration-news/">Text and world restoration</a></div>
+    <div class="meta">Reno Project</div>
+    <div class="anno">Digital archaeology at its most stubborn: reading pixelated text off
+      four hours of 1988 VHS tape recovered by Stuart Cass, using Jeremy Penner's browser-based
+      Habitat Inspector, to transcribe lost issues of the in-world newspaper <em>The Rant</em>
+      and reconstruct city geography that no longer existed in any database.</div>
+    <div class="lens">User-generated content is the part that dies first and matters most. Worth
+      sitting with if you think of persistence as a solved problem.</div>
+  </div>
+
+  <div class="src">
+    <div class="t"><a href="https://renoproject.org/club-caribe-server-source-code-found/">Club Caribe server source code found</a></div>
+    <div class="meta">Reno Project</div>
+    <div class="anno">The successor's server code surfacing — lets you diff what was actually
+      removed during the sterilisation, rather than relying on recollection.</div>
+  </div>
+
+  <div class="src">
+    <div class="t"><a href="https://renoproject.org/30-year-anniversary-of-club-caribe-closing/">30 years since Club Caribe closed</a></div>
+    <div class="meta">Reno Project</div>
+    <div class="anno">The end of the line for the Q-Link branch, February 1994, with material on
+      how the community adapted to a stripped-down world — the "spec races" run in ghost mode
+      are a nice small proof that players will manufacture stakes if you remove them.</div>
+  </div>
+
+  <div class="src">
+    <div class="t"><a href="https://www.themade.org/">The MADE</a></div>
+    <div class="meta">Museum of Art and Digital Entertainment, Oakland</div>
+    <div class="anno">The institution that secured the rights and made all of the above
+      possible. Linked because the report I started from described their work at length without
+      once pointing at them.</div>
+  </div>
+</div>
+
+<h4>Secondary — useful, but someone else's account</h4>
+<div class="sources">
+  <div class="src">
+    <div class="t"><a href="https://en.wikipedia.org/wiki/Habitat_(video_game)">Habitat (video game) — Wikipedia</a></div>
+    <div class="meta">Reference</div>
+    <div class="anno">Accurate on dates and the corporate chain of custody. Start here for
+      chronology, then leave.</div>
+  </div>
+  <div class="src">
+    <div class="t"><a href="https://www.gamesthatwerent.com/gtw64/habitat/">Habitat (C64) — Games That Weren't</a></div>
+    <div class="meta">Reference</div>
+    <div class="anno">Unusually detailed C64-side history, with material on the client and its
+      distribution that doesn't appear elsewhere.</div>
+  </div>
+  <div class="src">
+    <div class="t"><a href="https://lareviewofbooks.org/article/quest-of-the-avatars/">Quest of the Avatars</a></div>
+    <div class="meta">Los Angeles Review of Books</div>
+    <div class="anno">The cultural-criticism reading, and a good corrective to the engineering
+      framing. Takes the identity-fluidity of the world — head-swapping, the Change-o-matic —
+      more seriously than the technical sources do.</div>
+  </div>
+  <div class="src">
+    <div class="t"><a href="http://gunkelweb.com/articles/virtual_geographies.pdf">Virtual Geographies</a></div>
+    <div class="meta">David J. Gunkel · PDF</div>
+    <div class="anno">Uses Habitat to argue against Benedikt's Cartesian model of cyberspace —
+      that imposing physical law on a digital world is a choice rather than a necessity. The
+      most intellectually serious secondary treatment I found.</div>
+  </div>
+  <div class="src">
+    <div class="t"><a href="https://tltaylor.com/wp-content/uploads/2009/07/Taylor-Designers.pdf">Virtual Environments and the Designers Who Shape Them</a></div>
+    <div class="meta">T.L. Taylor · PDF</div>
+    <div class="anno">Situates Habitat in the longer sociology of virtual world design. Taylor
+      is the strongest academic writer in this area.</div>
+  </div>
+  <div class="src">
+    <div class="t"><a href="https://www.gamedeveloper.com/design/the-scumm-diary-stories-behind-one-of-the-greatest-game-engines-ever-made">The SCUMM Diary</a></div>
+    <div class="meta">Game Developer</div>
+    <div class="anno">The adjacent lineage — how the object-behaviour approach forced by
+      Habitat's memory constraints fed into LucasArts' adventure game engine.</div>
+  </div>
+  <div class="src">
+    <div class="t"><a href="https://web.archive.org/web/20260610220714/http://paleotronic.com/2018/07/01/a-1980s-quantum-link-to-a-modern-day-mutiny/">A 1980s Quantum Link to a modern-day mutiny</a>
+      <span class="flag">archived — original dead</span></div>
+    <div class="meta">Paleotronic · original host no longer responds; Wayback copy linked</div>
+    <div class="anno">On Q-Link, Club Caribe and the modern revival. Included as a live
+      demonstration of the link-rot problem the preservation sources describe.</div>
+  </div>
+  <div class="src">
+    <div class="t"><a href="https://massivelyop.com/2015/09/05/the-game-archaeologist-lucasfilms-habitat/">The Game Archaeologist: Lucasfilm's Habitat</a>
+      <span class="flag">blocks automated access</span></div>
+    <div class="meta">Massively Overpowered · loads in a browser, 403s to scripts</div>
+    <div class="anno">A solid popular overview. Flagged because you can't fetch it
+      programmatically.</div>
+  </div>
+  <div class="src">
+    <div class="t"><a href="https://www.vzones.com/about/">VZones</a></div>
+    <div class="meta">Reference</div>
+    <div class="anno">The commercial descendant line after WorldsAway — evidence of how long
+      this lineage actually persisted.</div>
+  </div>
+</div>
+
+<h2>Seven lessons, and what each one raises now</h2>
+
+<p>What follows is the transfer exercise: the finding as the sources state it, then what I think
+it puts pressure on in a federated world with automated inhabitants. The second half is mine and
+is speculation. Where Habitat genuinely doesn't answer the question I've said so rather than
+manufacturing a lesson.</p>
+
+<div class="lesson">
+<h3><span class="n">1.</span> Centralized content generation does not scale</h3>
+<p class="then">Farmer spent weeks building the D'nalsi Island Adventure — a hundred regions, a
+courthouse theatre sequence, an NPC handing out maps, a password hidden in the map's geometry,
+a 25,000-Token prize. One player found the critical clue in the first fifteen minutes. The whole
+thing was finished in about eight hours, and most of the population never meaningfully took part.
+The conclusion in the paper is that designers cannot produce content fast enough to feed a
+population, and should build tools and economies instead.</p>
+<p class="now">The obvious 2026 move is to answer this with generation: if content is the
+bottleneck, make it infinite and free. I think that misreads the failure. D'nalsi didn't fail
+because there wasn't enough of it — it failed because a single player could exhaust it, and
+because it was <em>consumed</em> rather than <em>made</em>. Infinite generated content is still
+consumed. Whether it substitutes for the thing users make themselves is, as far as I can tell,
+genuinely untested.</p>
+</div>
+
+<div class="lesson">
+<h3><span class="n">2.</span> Two percent of the population is the world</h3>
+<p class="then">Farmer's archetypes: the Passive are about half the users and a small slice of
+connect time; the Active are the paying core; the Motivators — roughly one in fifty — start the
+businesses, throw the parties, run for office and commit the crimes that everyone else
+experiences as content; Caretakers are matured Motivators who resolve disputes and mentor
+newcomers unpaid. The stated operational goal was to move each user one role to the right.</p>
+<p class="now">This is the lesson I'd worry about most under federation. If Motivators are one in
+fifty, a small instance has none, and a world of small instances is a world of empty rooms with
+no way to run a treasure hunt or an election. Either Motivators operate across instance
+boundaries — which means identity, reputation and standing have to federate before anything
+fun works — or small instances are structurally dead on arrival. Habitat had one operator and
+one population, so it simply never faced this.</p>
+</div>
+
+<div class="lesson">
+<h3><span class="n">3.</span> Every exploit is found immediately, and drained to the limit of patience</h3>
+<p class="then">Vendroids sold Dolls at 75T that a Pawn Machine bought back at 100T; Crystal
+Balls sold at 18,000T and hocked at 30,000T. A couple of players shuttled back and forth for
+hours in a single night. By morning the daily database report showed the money supply had
+quintupled and at least three Avatars held hundreds of thousands of Tokens each. Asked where the
+money came from, they replied: "We got it fair and square! And we're not going to tell you how!"</p>
+<p class="now">The binding constraint there was human patience — someone had to walk an avatar
+across town, over and over, all night. That constraint is gone. An automated inhabitant with an
+API finds and exhausts the same arbitrage in seconds, and does it in every instance
+simultaneously. Any economy designed now has to assume that every price inconsistency is found
+and drained instantly. Habitat's own fix was to correct the prices; that only worked because
+they had a night's grace and a single database to inspect.</p>
+</div>
+
+<div class="lesson">
+<h3><span class="n">4.</span> Elected authority without mechanical authority is theatre</h3>
+<p class="then">After a Motivator started shooting newcomers outside town, the community held a
+vote on whether Habi-murder was a crime and split exactly 50/50. Rather than ban weapons — the
+reasoning being that anyone could ghost and flee, making victimhood voluntary — they held a
+sheriff election instead. There was a debate in the meeting hall with three candidates. The
+winner, whom most voters didn't know was the mastermind behind the arbitrage scam, won by a
+landslide. And then, in the paper's words: "For weeks the Sheriff was nothing but a figurehead.
+We were stumped about what powers to give him. Should he have the right to shoot anyone
+anywhere? Give him a more powerful gun? A magic wand to zap people off to jail? What about
+courts? Laws? Lawyers?"</p>
+<p class="now">The governance affordance has to exist in code before the vote, or the vote
+produces a person with moral authority and no levers. This gets sharper under federation, where
+"the code" isn't one codebase and an office won on one instance may mean nothing on the next. It
+also gets sharper with automated inhabitants: a great deal of governance machinery quietly
+assumes the thing being sanctioned can be embarrassed, excluded, or made to lose something.</p>
+</div>
+
+<div class="lesson">
+<h3><span class="n">5.</span> The operators could never stop being needed <span class="flag">unsolved</span></h3>
+<div class="unsolved">
+<p class="then">Read <em>Anecdotes</em> and count the interventions. A lock had to be added to
+the church door by hand, because the minister's flowers kept being stolen and pawned while he
+was logged off. Married couples' turfs had to be manually joined so they could cohabit — and the
+code didn't really handle it. When D'nalsi bottlenecked, Farmer broadcast the password himself.
+Every emergent institution in Habitat required a human with database access to notice it and act.</p>
+<p class="now">This is the transfer I cannot make, and I want to be plain about that rather than
+paper over it. Habitat's answer to "the simulation can't resolve this" was the
+Bureaucrat-in-a-box: an object that opened a channel to people who could edit reality. A
+federated system has no such people, or rather has many mutually distrusting ones. Delegating
+the role to language models is the obvious idea and I don't trust it, precisely because these
+interventions were judgment calls about what a community deserved, made by people accountable
+to that community. I don't have an answer here. Neither, as far as I can find, does anyone
+else.</p>
+</div>
+</div>
+
+<div class="lesson">
+<h3><span class="n">6.</span> Bandwidth scarcity forced the right architecture</h3>
+<p class="then">At 300 baud, sending pixels was impossible, so the server sent behaviour: not an
+image of an avatar walking but a token instructing the client to run its own walk routine. The
+paper elevates this to a principle — "communications bandwidth is a scarce resource" — and
+argues that the discipline it imposes is a feature, not a workaround, because it forces you to
+model the world in terms of meaningful high-level operations.</p>
+<p class="now">The modern analogue isn't network bandwidth, which is free. It's context. An
+automated inhabitant that has to be handed the state of the world as prose, every turn, doesn't
+scale, and the discipline that saved Habitat — define a small vocabulary of meaningful
+operations and send only those — returns for structurally identical reasons. I found this the
+most surprising piece of transfer: a 300-baud constraint from 1986 and a token budget in 2026
+push you toward the same architecture.</p>
+</div>
+
+<div class="lesson">
+<h3><span class="n">7.</span> Sterilisation kills worlds</h3>
+<p class="then">Q-Link's management worried the "weird, goofy, sci-fi fantasy flavor" — combat,
+magic, death — would alienate mainstream customers. After the pilot ended they stripped the
+weapons and the science fiction and relaunched as Club Caribe, a peaceful resort. Morningstar
+called it Club Metaphor. It ran for five years with a small dedicated community that invented
+ghost races to manufacture the stakes the design had removed.</p>
+<p class="now">Club Caribe didn't fail, exactly, which is what makes it a useful warning rather
+than a simple morality tale: it survived, smaller and thinner, and the users generated their own
+risk anyway. The relevant pressure now is that safety measures and automated moderation both
+tend toward removing the possibility of loss, and loss is what made Habitat's stories worth
+telling. I don't think "add weapons" is the lesson. I think the lesson is that a world where
+nothing can go wrong is a world where nothing that happens matters, and that automated
+inhabitants — which cannot lose anything — are a way of accidentally building Club Caribe while
+believing you're building Habitat.</p>
+</div>
+
+<h2>What Habitat cannot tell you</h2>
+
+<p>The reason most Habitat writing is unreliable is that the case is so quotable it invites
+over-fitting. Some limits I'd hold onto:</p>
+
+<ul class="tight">
+  <li><strong>The scale is wrong by orders of magnitude.</strong> Habitat's design targeted
+  20,000 avatars, with expansion contemplated to 50,000, and concurrency far below that.
+  Findings about a town where the Motivators knew each other by name may simply not survive
+  contact with millions of users.</li>
+  <li><strong>Nearly everything we know comes from two people.</strong> Morningstar and Farmer
+  wrote the founding paper, the anecdotes, the retrospectives, and much of the modern
+  reconstruction. They are honest and self-critical writers, and they are also the only
+  substantial witnesses. There is no independent account of the sheriff election.</li>
+  <li><strong>It was a paid beta, which selects hard.</strong> Users paid roughly eight cents a
+  minute for the privilege. That population is not the general public, and its willingness to
+  invest is the independent variable in most of the sociological findings.</li>
+  <li><strong>One operator, one jurisdiction, one database.</strong> Every governance
+  lesson assumes someone can look at the whole world at once and change it. That assumption is
+  exactly what federation removes, and it is load-bearing far more often than the sources
+  acknowledge.</li>
+  <li><strong>No automated inhabitants worth the name.</strong> The Vendroids, the
+  Bureaucrat-in-a-box and NPCs like Salesh were props with behaviours. They are not evidence
+  about language models either way, and anyone claiming Habitat settles the question — including
+  me, in the section above — is arguing from principle, not from data.</li>
+</ul>
+
+<h2>Two vocabularies, kept apart</h2>
+
+<p>Habitat's terms are good enough to be dangerous. Borrowing them imports 1986 assumptions
+along with the words, so I keep two glossaries and never share a term by reference.</p>
+
+<h3>Habitat's words, as the sources use them</h3>
+<dl class="gloss">
+  <dt>Avatar</dt><dd>The figure representing a human player. Habitat's coinage in the modern
+  sense. Heads were detachable and could be carried.</dd>
+  <dt>Turf</dt><dd>An Avatar's private, customisable home region.</dd>
+  <dt>Region</dt><dd>One screen-sized, server-authoritative unit of world with a hard object
+  limit. Movement between regions is an explicit transition, not continuous space. The prototype
+  world had around 20,000.</dd>
+  <dt>Token (T$)</dt><dd>The currency. Avatars were hatched with 2,000 and drew 100 a day on
+  login — a stipend, not a wage.</dd>
+  <dt>Ghost</dt><dd>An intangible state: you can watch and move but not act or be acted upon.
+  Load-bearing, because it was the stated reason weapons were never banned.</dd>
+  <dt>Vendroid / Pawn Machine</dt><dd>The economy's source and sink. Their per-location price
+  variation is what made the arbitrage possible.</dd>
+  <dt>Bureaucrat-in-a-box</dt><dd>An in-world object that opened a channel to the operators. The
+  petition mechanism, and an admission that the simulation couldn't resolve everything.</dd>
+  <dt>Geek Gods</dt><dd>The operators, in the sources' own term. Able to rewrite object
+  behaviour, adjust balances, and edit the database directly.</dd>
+  <dt>Passive / Active / Motivator / Caretaker</dt><dd>Farmer's population model, in ascending
+  order of engagement.</dd>
+</dl>
+
+<h3>Words the sources make necessary but don't supply</h3>
+<p>Provisional, and only as good as the thinking they support. The distinction I keep needing is
+<strong>stake</strong> — something an inhabitant can lose and would rather not — because it's
+what separates a player from a very convincing process. On that reading an <strong>Avatar</strong>
+stays human-driven; a <strong>Familiar</strong> is an automated inhabitant bound to a human
+principal who's accountable for it; a <strong>Fixture</strong> is one bound to a place, with no
+principal beyond whoever runs the server. Neither of the latter two accumulates or votes. I hold
+this loosely: it's a position for the sake of clear thinking, not a specification for anything.</p>
+
+<h2>Sources I excluded, and why</h2>
+
+<p>This page began as a Google Deep Research report I commissioned, which assembled 49
+citations. That report is the reason this page exists and it found several things I would not
+have found — the Reno Project's VHS archaeology, the MADE's Copyright Office filing. It also
+cited material that doesn't belong on a page whose claim is primary sources, and I think the
+honest thing is to say which and why rather than quietly launder the result.</p>
+
+<ul class="tight">
+  <li><strong>Two Grokipedia articles</strong>, on Chip Morningstar and on the E programming
+  language. LLM-generated encyclopedia entries are not sources; citing one on a page about
+  primary sources would be self-defeating.</li>
+  <li><strong>Two ResearchGate links</strong>, including one to <em>The Lessons of Lucasfilm's
+  Habitat</em> itself. Login-walled, and redundant — the paper is free in at least three places
+  linked above.</li>
+  <li><strong>dokumen.pub (×2) and studylib</strong>, which are scan-hosting sites for
+  copyrighted books. All returned 403, none was the only source for anything, and I'd rather
+  cite the books properly than link a scrape.</li>
+  <li><strong>scispace</strong>, likewise inaccessible and redundant.</li>
+  <li><strong>Assorted reference filler</strong> — a computer dictionary, a conference program,
+  a constructivist-learning page — cited in the report but supporting nothing load-bearing.</li>
+</ul>
+
+<p>I also checked the report's specifics against the primary texts and corrected one: the
+Doll and Crystal Ball arbitrage happened in a single night, not "over a single weekend" —
+the paper says the operators discovered it in the next morning's database report. The vivid
+detail about spraying display chips with freon to induce hardware faults I've left out of the
+lessons above because I could only trace it to interview recollection, not contemporaneous
+record; it may well be true.</p>
+
+<footer>
+  <p>Links verified 26 August 2026. Where a source is fragile, an archived copy is linked beside
+  the original. Corrections welcome — particularly on anything above where I've asserted more
+  than the sources support.</p>
+  <p>The founding paper is <a href="https://www.crockford.com/ec/lessons.html">here</a>. If you
+  read nothing else from this page, read that.</p>
+</footer>
+
+</div>
+</body>
+</html>
