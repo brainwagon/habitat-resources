@@ -5,7 +5,8 @@ with a question from 2026 in mind: what a massively multiplayer community would 
 it were federated across many independent operators, and if some of its inhabitants were
 driven by large language models.
 
-**Read it: https://brainwagon.github.io/habitat-resources/**
+**Read it: https://mvandewettering.com/habitat-resources/**
+(also served at https://brainwagon.github.io/habitat-resources/)
 
 This is research, not a plan. No system is being built. The point is to understand a
 complex system from the beginning of this field well enough that its lessons can sharpen
