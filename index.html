@@ -3,106 +3,242 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="An annotated guide to the primary sources on Lucasfilm's Habitat, read with a 2026 question in mind: federation and LLM-driven inhabitants.">
 <title>Reading Habitat in 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&display=swap">
 <style>
   :root {
-    --bg: #fbfaf7; --fg: #1c1b19; --muted: #66625b; --rule: #ddd8ce;
-    --accent: #8a3324; --card: #f4f1ea; --tag: #efeade;
+    --ground:  #f6f5fa;
+    --surface: #edebf5;
+    --ink:     #191733;
+    --muted:   #5b5878;
+    --rule:    #d8d4e6;
+    --rule-hi: #b9b3d0;
+    --accent:  #3b2fa8;
+    --gold:    #8a6a12;
+    --serif: Newsreader, "Iowan Old Style", Charter, Georgia, serif;
+    --display: "Instrument Serif", Newsreader, Georgia, serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+    --measure: 34rem;
   }
   @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #16151a; --fg: #e6e3dd; --muted: #9d9890; --rule: #34323a;
-      --accent: #e08b6f; --card: #1e1d23; --tag: #26252c;
+    :root:not([data-theme="light"]) {
+      --ground:  #131120;
+      --surface: #1c1930;
+      --ink:     #e8e5f4;
+      --muted:   #9b97b8;
+      --rule:    #2e2a47;
+      --rule-hi: #474167;
+      --accent:  #a99bff;
+      --gold:    #cfa441;
     }
   }
-  * { box-sizing: border-box; }
+  :root[data-theme="dark"] {
+    --ground:  #131120;
+    --surface: #1c1930;
+    --ink:     #e8e5f4;
+    --muted:   #9b97b8;
+    --rule:    #2e2a47;
+    --rule-hi: #474167;
+    --accent:  #a99bff;
+    --gold:    #cfa441;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
   body {
-    margin: 0; padding: 0 1.5rem 6rem;
-    background: var(--bg); color: var(--fg);
-    font: 17px/1.65 Charter, "Bitstream Charter", "Iowan Old Style", Georgia, serif;
-    -webkit-text-size-adjust: 100%;
+    margin: 0;
+    padding: 0 1.5rem 7rem;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.62;
+    font-variant-numeric: oldstyle-nums;
+    -webkit-font-smoothing: antialiased;
   }
-  .wrap { max-width: 42rem; margin: 0 auto; }
-  header.masthead { padding: 4rem 0 2rem; border-bottom: 2px solid var(--fg); margin-bottom: 2.5rem; }
-  h1 { font-size: 2.4rem; line-height: 1.1; margin: 0 0 .8rem; letter-spacing: -0.02em; }
-  .byline { color: var(--muted); font-size: .9rem; margin: 0; }
-  .standfirst { font-size: 1.15rem; color: var(--fg); margin: 1.4rem 0 0; }
-  h2 {
-    font-size: 1.45rem; line-height: 1.2; margin: 3.5rem 0 1rem;
-    padding-top: 1.2rem; border-top: 1px solid var(--rule); letter-spacing: -0.01em;
-  }
-  h3 { font-size: 1.08rem; margin: 2.2rem 0 .5rem; }
-  h4 { font-size: .8rem; letter-spacing: .09em; text-transform: uppercase;
-       color: var(--muted); margin: 2.5rem 0 .8rem; font-weight: 600; }
-  p { margin: 0 0 1.1rem; }
+  .wrap { max-width: var(--measure); margin: 0 auto; }
   a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  a:hover { text-decoration-thickness: 2px; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+  p { margin: 0 0 1.15rem; }
+  em { font-style: italic; }
+
+  /* ── masthead ─────────────────────────────── */
+  .masthead {
+    padding: 5rem 0 2.25rem;
+    border-bottom: 1px solid var(--ink);
+    margin-bottom: 3rem;
+    display: flex; flex-direction: column; gap: 1.1rem;
+  }
+  .masthead h1 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(2.9rem, 9vw, 4.2rem);
+    line-height: .96;
+    letter-spacing: -0.015em;
+    margin: 0;
+    text-wrap: balance;
+  }
+  .byline {
+    font-family: var(--mono);
+    font-size: .74rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0;
+    font-variant-numeric: tabular-nums;
+  }
+  .standfirst {
+    font-size: 1.16rem;
+    line-height: 1.5;
+    color: var(--ink);
+    margin: 0;
+    max-width: 32rem;
+  }
+  .standfirst em { font-style: italic; }
+
+  /* ── section heads ────────────────────────── */
+  h2 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(1.75rem, 4.5vw, 2.15rem);
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    margin: 4.5rem 0 1.4rem;
+    padding-top: 1.4rem;
+    border-top: 1px solid var(--rule-hi);
+    text-wrap: balance;
+  }
+  h3 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 1.1rem;
+    line-height: 1.3;
+    margin: 2.4rem 0 .6rem;
+    text-wrap: balance;
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: .7rem;
+    font-weight: 500;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 3rem 0 1rem;
+    padding-bottom: .4rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
   blockquote {
-    margin: 1.5rem 0; padding: 0 0 0 1.2rem;
-    border-left: 3px solid var(--accent); color: var(--fg); font-style: italic;
+    margin: 2rem 0;
+    padding-left: 1.4rem;
+    border-left: 2px solid var(--accent);
+    font-size: 1.08rem;
+    line-height: 1.5;
+    font-style: italic;
   }
-  blockquote cite { display: block; font-style: normal; font-size: .85rem;
-                    color: var(--muted); margin-top: .5rem; }
-  .note {
-    background: var(--card); border: 1px solid var(--rule); border-radius: 3px;
-    padding: 1rem 1.2rem; margin: 1.8rem 0; font-size: .95rem;
+  blockquote cite {
+    display: block;
+    font-family: var(--mono);
+    font-style: normal;
+    font-size: .72rem;
+    letter-spacing: .05em;
+    color: var(--muted);
+    margin-top: .7rem;
   }
-  .note p:last-child { margin-bottom: 0; }
-  /* ---- source list: denser reference treatment ---- */
-  .sources { font-family: ui-sans-serif, system-ui, "Helvetica Neue", sans-serif; font-size: .93rem; }
-  .src { padding: .9rem 0; border-bottom: 1px solid var(--rule); }
-  .src:first-of-type { border-top: 1px solid var(--rule); }
-  .src .t { font-weight: 600; line-height: 1.35; }
-  .src .meta { color: var(--muted); font-size: .82rem; margin-top: .15rem; }
-  .src .anno { margin-top: .45rem; line-height: 1.5; }
-  .src .lens { margin-top: .45rem; padding-left: .8rem; border-left: 2px solid var(--rule);
-               color: var(--muted); font-size: .88rem; line-height: 1.5; }
+  blockquote cite em { font-style: normal; }
+
+  /* ── lineage table ────────────────────────── */
+  .scroll { overflow-x: auto; margin: 2rem 0; }
+  table { border-collapse: collapse; width: 100%; min-width: 30rem; font-size: .88rem; line-height: 1.45; }
+  th, td { text-align: left; padding: .7rem .8rem .7rem 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  th {
+    font-family: var(--mono); font-size: .67rem; font-weight: 500;
+    letter-spacing: .11em; text-transform: uppercase; color: var(--muted);
+    border-bottom: 1px solid var(--rule-hi);
+  }
+  td.yr { font-family: var(--mono); font-size: .76rem; white-space: nowrap; color: var(--gold); font-variant-numeric: tabular-nums; padding-right: 1.2rem; }
+  td.sys { white-space: nowrap; padding-right: 1.2rem; font-weight: 600; }
+
+  /* ── source list: finding-aid grid ────────── */
+  .src {
+    display: grid; gap: .35rem 1.6rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .src:first-of-type { border-top: 1px solid var(--rule-hi); }
+  .src .t { font-weight: 600; font-size: 1rem; line-height: 1.32; }
+  .src .meta {
+    font-family: var(--mono); font-size: .72rem; line-height: 1.55;
+    color: var(--muted); letter-spacing: .01em;
+  }
+  .src .meta a { color: var(--muted); }
+  .src .anno { font-size: .93rem; line-height: 1.55; }
+  .src .lens {
+    font-size: .88rem; line-height: 1.55; color: var(--muted);
+    padding-left: .9rem; border-left: 2px solid var(--rule-hi);
+  }
   .flag {
-    display: inline-block; font-size: .68rem; letter-spacing: .06em; text-transform: uppercase;
-    background: var(--tag); border: 1px solid var(--rule); border-radius: 2px;
-    padding: .1rem .35rem; margin-left: .3rem; color: var(--muted); vertical-align: 1px;
-    white-space: nowrap;
+    display: inline-block; font-family: var(--mono); font-size: .62rem; font-weight: 500;
+    letter-spacing: .09em; text-transform: uppercase;
+    color: var(--gold); border: 1px solid currentColor; border-radius: 2px;
+    padding: .1rem .34rem; margin-left: .4rem; vertical-align: .12em; white-space: nowrap;
   }
-  /* ---- lineage table ---- */
-  .scroll { overflow-x: auto; margin: 1.5rem 0; }
-  table { border-collapse: collapse; width: 100%; font-size: .9rem;
-          font-family: ui-sans-serif, system-ui, sans-serif; }
-  th, td { text-align: left; padding: .55rem .7rem; border-bottom: 1px solid var(--rule);
-           vertical-align: top; }
-  th { font-size: .74rem; letter-spacing: .07em; text-transform: uppercase;
-       color: var(--muted); border-bottom: 1px solid var(--fg); font-weight: 600; }
-  td.yr { white-space: nowrap; color: var(--muted); }
-  /* ---- lessons ---- */
-  .lesson { margin: 2.2rem 0; }
-  .lesson h3 { margin-top: 0; }
-  .lesson h3 .n { color: var(--accent); font-variant-numeric: tabular-nums; margin-right: .4rem; }
-  .then, .now { margin: 0 0 .8rem; }
+  @media (min-width: 60rem) {
+    :root { --measure: 46rem; }
+    .src { grid-template-columns: 11rem 1fr; }
+    .src .t, .src .anno, .src .lens { grid-column: 2; }
+    .src .meta { grid-column: 1; grid-row: 1 / span 4; text-align: right; padding-top: .2rem; }
+    .standfirst { font-size: 1.22rem; }
+  }
+
+  /* ── lessons ──────────────────────────────── */
+  .lesson { margin: 2.75rem 0; }
+  .lesson h3 { margin-top: 0; display: flex; gap: .6rem; align-items: baseline; }
+  .lesson h3 .n {
+    font-family: var(--mono); font-size: .78rem; font-weight: 500;
+    color: var(--gold); font-variant-numeric: tabular-nums; flex: none;
+  }
+  .now { padding-left: 1.1rem; border-left: 2px solid var(--rule-hi); }
   .now::before {
-    content: "In 2026"; display: block; font-size: .72rem; letter-spacing: .08em;
-    text-transform: uppercase; color: var(--muted); margin-bottom: .2rem; font-weight: 600;
-    font-family: ui-sans-serif, system-ui, sans-serif;
+    content: "In 2026"; display: block;
+    font-family: var(--mono); font-size: .66rem; font-weight: 500;
+    letter-spacing: .13em; text-transform: uppercase; color: var(--muted);
+    margin-bottom: .35rem;
   }
-  .unsolved { border-left: 3px solid var(--accent); padding-left: 1rem; }
-  dl.gloss { font-size: .95rem; }
-  dl.gloss dt { font-weight: 600; margin-top: 1rem; }
-  dl.gloss dd { margin: .15rem 0 0; color: var(--fg); }
-  footer { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--rule);
-           color: var(--muted); font-size: .85rem; }
-  ul.tight li { margin-bottom: .5rem; }
+  .unsolved .now { border-left-color: var(--accent); }
+  .unsolved .now::before { content: "In 2026 — unsolved"; color: var(--accent); }
+
+  dl.gloss { margin: 1.5rem 0; font-size: .95rem; }
+  dl.gloss dt { font-weight: 600; margin-top: 1.1rem; }
+  dl.gloss dd { margin: .1rem 0 0; color: var(--muted); }
+  ul.tight { padding-left: 1.1rem; }
+  ul.tight li { margin-bottom: .7rem; }
+  ul.tight strong { font-weight: 600; }
+
+  footer {
+    margin-top: 5rem; padding-top: 1.5rem;
+    border-top: 1px solid var(--rule-hi);
+    font-family: var(--mono); font-size: .74rem; line-height: 1.7; color: var(--muted);
+  }
+  footer a { color: var(--accent); }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 </style>
+
 </head>
 <body>
 <div class="wrap">
-
 <header class="masthead">
-  <h1>Reading Habitat in 2026</h1>
   <p class="byline">Mark VandeWettering · 26 August 2026 · a source list and some notes</p>
+  <h1>Reading Habitat in 2026</h1>
   <p class="standfirst">Lucasfilm's <em>Habitat</em> ran on a Commodore 64 over a 300-baud modem
   and worked out most of what we know about online societies before the web existed. I went
   looking for the primary sources. This is what I found, what's actually worth reading, and
   what forty-year-old lessons do and don't survive contact with a world that's federated
   across many operators and populated partly by language models.</p>
 </header>
-
 <h2>Why Habitat, in 2026</h2>
 
 <p>Most writing about <em>Habitat</em> is nostalgia — "the first graphical MMO," a line in a
@@ -166,20 +302,20 @@ countries. When a source says "Habitat," check which one it means.</p>
 <table>
   <thead><tr><th>System</th><th class="yr">Ran</th><th>What it actually was</th></tr></thead>
   <tbody>
-    <tr><td><strong>Habitat</strong></td><td class="yr">1986–May 1988</td>
+    <tr><td class="sys">Habitat</td><td class="yr">1986–May 1988</td>
       <td>The Lucasfilm/Quantum Link pilot on the Commodore 64. A paid beta — users paid roughly
       $0.08/minute on top of Q-Link fees. Everything in the founding paper describes this.</td></tr>
-    <tr><td><strong>Club Caribe</strong></td><td class="yr">1989–Feb 1994</td>
+    <tr><td class="sys">Club Caribe</td><td class="yr">1989–Feb 1994</td>
       <td>Q-Link's commercial release. Same engine, weapons and the science-fiction content
       stripped out at the operator's insistence. Morningstar's name for the result was
       "Club Metaphor."</td></tr>
-    <tr><td><strong>Fujitsu Habitat</strong></td><td class="yr">Feb 1990–</td>
+    <tr><td class="sys">Fujitsu Habitat</td><td class="yr">Feb 1990–</td>
       <td>A rebuild for NIFTY-Serve in Japan, following a 1988 technology transfer at Skywalker
       Ranch. A re-implementation, not a port. Fujitsu bought the IP outright in 1993.</td></tr>
-    <tr><td><strong>WorldsAway</strong></td><td class="yr">Sep 1995–</td>
+    <tr><td class="sys">WorldsAway</td><td class="yr">Sep 1995–</td>
       <td>Fujitsu's desktop successor on CompuServe; the first world was Dreamscape. Returned to
       Japan as <em>Habitat II</em> in 1996. Descendants ran commercially for years afterward.</td></tr>
-    <tr><td><strong>NeoHabitat</strong></td><td class="yr">2016–present</td>
+    <tr><td class="sys">NeoHabitat</td><td class="yr">2016–present</td>
       <td>Open-source reconstruction from source code released by the MADE. Original C64 clients
       talk to a re-implemented server. Not an emulator — the logic was ported.</td></tr>
   </tbody>
@@ -202,8 +338,8 @@ original artifacts. <strong>Secondary</strong> means someone writing about it af
 link below was checked on <strong>26 August 2026</strong>; where a source is fragile I've put
 the archived copy beside it.</p>
 
-<h4>Primary</h4>
-<div class="sources">
+<p class="eyebrow">Primary</p>
+<div>
 
   <div class="src">
     <div class="t"><a href="https://www.crockford.com/ec/lessons.html">The Lessons of Lucasfilm's Habitat</a></div>
@@ -321,8 +457,8 @@ the archived copy beside it.</p>
   </div>
 </div>
 
-<h4>Reconstruction — modern work on original artifacts</h4>
-<div class="sources">
+<p class="eyebrow">Reconstruction — modern work on original artifacts</p>
+<div>
   <div class="src">
     <div class="t"><a href="https://github.com/frandallfarmer/neohabitat">NeoHabitat</a></div>
     <div class="meta">Source repository · docs at
@@ -371,8 +507,8 @@ the archived copy beside it.</p>
   </div>
 </div>
 
-<h4>Secondary — useful, but someone else's account</h4>
-<div class="sources">
+<p class="eyebrow">Secondary — useful, but someone else's account</p>
+<div>
   <div class="src">
     <div class="t"><a href="https://en.wikipedia.org/wiki/Habitat_(video_game)">Habitat (video game) — Wikipedia</a></div>
     <div class="meta">Reference</div>
@@ -442,7 +578,7 @@ manufacturing a lesson.</p>
 
 <div class="lesson">
 <h3><span class="n">1.</span> Centralized content generation does not scale</h3>
-<p class="then">Farmer spent weeks building the D'nalsi Island Adventure — a hundred regions, a
+<p class="prior">Farmer spent weeks building the D'nalsi Island Adventure — a hundred regions, a
 courthouse theatre sequence, an NPC handing out maps, a password hidden in the map's geometry,
 a 25,000-Token prize. One player found the critical clue in the first fifteen minutes. The whole
 thing was finished in about eight hours, and most of the population never meaningfully took part.
@@ -458,7 +594,7 @@ genuinely untested.</p>
 
 <div class="lesson">
 <h3><span class="n">2.</span> Two percent of the population is the world</h3>
-<p class="then">Farmer's archetypes: the Passive are about half the users and a small slice of
+<p class="prior">Farmer's archetypes: the Passive are about half the users and a small slice of
 connect time; the Active are the paying core; the Motivators — roughly one in fifty — start the
 businesses, throw the parties, run for office and commit the crimes that everyone else
 experiences as content; Caretakers are matured Motivators who resolve disputes and mentor
@@ -473,7 +609,7 @@ one population, so it simply never faced this.</p>
 
 <div class="lesson">
 <h3><span class="n">3.</span> Every exploit is found immediately, and drained to the limit of patience</h3>
-<p class="then">Vendroids sold Dolls at 75T that a Pawn Machine bought back at 100T; Crystal
+<p class="prior">Vendroids sold Dolls at 75T that a Pawn Machine bought back at 100T; Crystal
 Balls sold at 18,000T and hocked at 30,000T. A couple of players shuttled back and forth for
 hours in a single night. By morning the daily database report showed the money supply had
 quintupled and at least three Avatars held hundreds of thousands of Tokens each. Asked where the
@@ -488,7 +624,7 @@ they had a night's grace and a single database to inspect.</p>
 
 <div class="lesson">
 <h3><span class="n">4.</span> Elected authority without mechanical authority is theatre</h3>
-<p class="then">After a Motivator started shooting newcomers outside town, the community held a
+<p class="prior">After a Motivator started shooting newcomers outside town, the community held a
 vote on whether Habi-murder was a crime and split exactly 50/50. Rather than ban weapons — the
 reasoning being that anyone could ghost and flee, making victimhood voluntary — they held a
 sheriff election instead. There was a debate in the meeting hall with three candidates. The
@@ -504,10 +640,9 @@ also gets sharper with automated inhabitants: a great deal of governance machine
 assumes the thing being sanctioned can be embarrassed, excluded, or made to lose something.</p>
 </div>
 
-<div class="lesson">
-<h3><span class="n">5.</span> The operators could never stop being needed <span class="flag">unsolved</span></h3>
-<div class="unsolved">
-<p class="then">Read <em>Anecdotes</em> and count the interventions. A lock had to be added to
+<div class="lesson unsolved">
+<h3><span class="n">5.</span> The operators could never stop being needed</h3>
+<p class="prior">Read <em>Anecdotes</em> and count the interventions. A lock had to be added to
 the church door by hand, because the minister's flowers kept being stolen and pawned while he
 was logged off. Married couples' turfs had to be manually joined so they could cohabit — and the
 code didn't really handle it. When D'nalsi bottlenecked, Farmer broadcast the password himself.
@@ -521,11 +656,10 @@ interventions were judgment calls about what a community deserved, made by peopl
 to that community. I don't have an answer here. Neither, as far as I can find, does anyone
 else.</p>
 </div>
-</div>
 
 <div class="lesson">
 <h3><span class="n">6.</span> Bandwidth scarcity forced the right architecture</h3>
-<p class="then">At 300 baud, sending pixels was impossible, so the server sent behaviour: not an
+<p class="prior">At 300 baud, sending pixels was impossible, so the server sent behaviour: not an
 image of an avatar walking but a token instructing the client to run its own walk routine. The
 paper elevates this to a principle — "communications bandwidth is a scarce resource" — and
 argues that the discipline it imposes is a feature, not a workaround, because it forces you to
@@ -540,7 +674,7 @@ push you toward the same architecture.</p>
 
 <div class="lesson">
 <h3><span class="n">7.</span> Sterilisation kills worlds</h3>
-<p class="then">Q-Link's management worried the "weird, goofy, sci-fi fantasy flavor" — combat,
+<p class="prior">Q-Link's management worried the "weird, goofy, sci-fi fantasy flavor" — combat,
 magic, death — would alienate mainstream customers. After the pilot ended they stripped the
 weapons and the science fiction and relaunched as Club Caribe, a peaceful resort. Morningstar
 called it Club Metaphor. It ran for five years with a small dedicated community that invented
@@ -620,8 +754,9 @@ this loosely: it's a position for the sake of clear thinking, not a specificatio
 
 <h2>Sources I excluded, and why</h2>
 
-<p>This page began as a Google Deep Research report I commissioned, which assembled 49
-citations. That report is the reason this page exists and it found several things I would not
+<p>This page began as a <a href="./deep-research-report.md">Google Deep Research report</a>
+I commissioned, which assembled 49 citations. It's published here unedited so the provenance is
+checkable rather than asserted. That report is the reason this page exists and it found several things I would not
 have found — the Reno Project's VHS archaeology, the MADE's Copyright Office filing. It also
 cited material that doesn't belong on a page whose claim is primary sources, and I think the
 honest thing is to say which and why rather than quietly launder the result.</p>
